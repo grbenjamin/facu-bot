@@ -1,7 +1,7 @@
-const fs = require('node:fs');
+import { readdirSync } from 'node:fs';
 // Traer las clases de discord.js
-const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('../config.json')
+import { Client, Collection, Intents } from 'discord.js';
+import { token } from '../config.json';
 
 // Crear la instancia
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -9,7 +9,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection(); // Guardamos una collecion de todos los comandos
 
 // Buscamos en todos los archivos de la carpeta commands y agarramos solo los que terminen en .js
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
