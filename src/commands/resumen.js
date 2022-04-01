@@ -11,7 +11,7 @@ const command = new SlashCommandBuilder()
 
 export const data = command;
 export async function execute(interaction) {
-	// console.log(materia);
-	await interaction.reply(command);
+	let materia = interaction.options.getString('materia');
+	await interaction.reply(materia);
 }
 

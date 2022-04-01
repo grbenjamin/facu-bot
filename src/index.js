@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs';
 // Traer las clases de discord.js
 import { Client, Collection, Intents } from 'discord.js';
-import { token } from '../config.json';
+import cfg from '../config.json' assert { type: 'json' };
 
 // Crear la instancia
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -12,7 +12,7 @@ client.commands = new Collection(); // Guardamos una collecion de todos los coma
 const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const command = await import(`./commands/${file}`);
 	// Agregame un item en la coleccion, con el nombre del comando
 	// como key y el comando en si como value
 	client.commands.set(command.data.name, command);
@@ -45,4 +45,4 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Login a discord con el token
-client.login(token);
+client.login(cfg.token);
